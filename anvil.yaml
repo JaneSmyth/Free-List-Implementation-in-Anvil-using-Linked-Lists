@@ -16,10 +16,6 @@ db_schema:
       client_hidden: false
       name: Size
       type: number
-    - admin_ui: {order: 3, width: 200}
-      client_hidden: false
-      name: Prev
-      type: number
     - admin_ui: {order: 4, width: 200}
       client_hidden: false
       name: Next
@@ -27,6 +23,16 @@ db_schema:
     indexes: []
     server: full
     title: MemoryTable
+  memorytablehead:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: HeadID
+      type: number
+    indexes: []
+    server: full
+    title: MemoryTableHead
 dependencies: []
 name: Clone of CA2 Project
 package_name: CA2_Project

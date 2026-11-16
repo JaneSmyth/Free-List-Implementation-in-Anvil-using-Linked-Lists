@@ -4,11 +4,16 @@ from anvil.tables import app_tables
 import anvil.server
 
 @anvil.server.callable
+def get_head():
+  
+
+  
+@anvil.server.callable
 def get_nodes():
   linked_list = []
   #the head of the list is the nodes whos "prev" points to null
   head = app_tables.memorytable.get(Prev=None)
-  
+
   if head is None:
     return linked_list 
   current = head
