@@ -1,0 +1,12 @@
+<anvil-form layout="CA2_Project.Layouts.BaseLayout">
+  <anvil-block slot="actions"></anvil-block>
+  <anvil-block slot="content">
+    <anvil-component type="ColumnPanel" name="column_panel_1" prop:role="card" designer:placeholder="Add components here">
+      <anvil-component type="DropDown" name="drop_down_menu" prop:items='["Display Free Memory List","Allocate Memory - First Fit","Allocate Memory - Worst Fit","Deallocate Memory"]' prop:include_placeholder="true" prop:placeholder="Select an option from the menu and click submit" container:grid_position="RRRGLN,QKWPIJ"></anvil-component>
+      <anvil-component type="Button" name="submit_menu" prop:text="Submit" container:grid_position="VGFJJC,FOHPSR"></anvil-component>
+    </anvil-component>
+  </anvil-block>
+  <anvil-block slot="title">
+    <anvil-component type="Label" name="label_1" prop:role="h1" prop:text="Home"></anvil-component>
+  </anvil-block>
+</anvil-form>

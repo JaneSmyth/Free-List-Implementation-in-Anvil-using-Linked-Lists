@@ -1,0 +1,42 @@
+allow_embedding: false
+correct_dependency_ids: {}
+db_schema:
+  memorytable:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: ID
+      type: number
+    - admin_ui: {order: 1, width: 129}
+      client_hidden: false
+      name: Address
+      type: number
+    - admin_ui: {order: 2, width: 106}
+      client_hidden: false
+      name: Size
+      type: number
+    - admin_ui: {order: 3, width: 200}
+      client_hidden: false
+      name: Prev
+      type: number
+    - admin_ui: {order: 4, width: 200}
+      client_hidden: false
+      name: Next
+      type: number
+    indexes: []
+    server: full
+    title: MemoryTable
+dependencies: []
+name: Clone of CA2 Project
+package_name: CA2_Project
+runtime_options:
+  client_version: '3'
+  server_spec: {base: python314}
+  version: 3
+services:
+- client_config: {enable_v2: true}
+  server_config: {}
+  source: /runtime/services/tables.yml
+startup: {module: StartMenu, type: form}
+startup_form: null
