@@ -23,4 +23,4 @@ class StartMenu(StartMenuTemplate):
     if(menu_item == "Allocate Memory - Worst Fit"):
       pass
     if(menu_item == "Deallocate Memory"):
-      pass
+      open_form('DeAllocateMemory')
