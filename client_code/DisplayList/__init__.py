@@ -11,3 +11,8 @@ class DisplayList(DisplayListTemplate):
     # Set Form properties and Data Bindings.
     super().__init__(**properties)
     self.repeating_panel_1.items = anvil.server.call('get_nodes')
+
+  @handle("button_1", "click")
+  def button_1_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    open_form('StartMenu')

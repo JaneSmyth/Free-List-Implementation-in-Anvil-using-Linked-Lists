@@ -19,8 +19,8 @@ class StartMenu(StartMenuTemplate):
     if(menu_item == "Display Free Memory List"):
       open_form("DisplayList")
     if(menu_item == "Allocate Memory - First Fit"):
-      pass
+      open_form('FirstFitAllocation')
     if(menu_item == "Allocate Memory - Worst Fit"):
-      pass
+      open_form('WorstFitAllocation')
     if(menu_item == "Deallocate Memory"):
       open_form('DeAllocateMemory')
