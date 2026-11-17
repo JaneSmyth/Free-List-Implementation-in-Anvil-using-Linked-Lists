@@ -1,1 +1,12 @@
-<anvil-form layout="CA2_Project.Layouts.BaseLayout"></anvil-form>
+<anvil-form layout="CA2_Project.Layouts.BaseLayout">
+  <anvil-block slot="title">
+    <anvil-component type="Label" name="label_1" prop:text="Worst Fit Allocation"></anvil-component>
+  </anvil-block>
+  <anvil-block slot="content">
+    <anvil-component type="ColumnPanel" name="card_1" prop:role="card">
+      <anvil-component type="Label" name="label_2" prop:text="Requested Memory Size" container:grid_position="KKJXRR,TUCNIS"></anvil-component>
+      <anvil-component type="TextBox" name="size_textbox" prop:placeholder='"30"' container:grid_position="KKJXRR,KIZGNR"></anvil-component>
+      <anvil-component type="Button" name="submit_btn" prop:text="Submit" container:grid_position="VJBJWA,AHLTCW"></anvil-component>
+    </anvil-component>
+  </anvil-block>
+</anvil-form>

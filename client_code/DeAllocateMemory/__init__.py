@@ -18,5 +18,6 @@ class DeAllocateMemory(DeAllocateMemoryTemplate):
     """This method is called when the button is clicked"""
     size = int(self.size_textbox.text)
     address = int(self.address_textbox.text)
-    anvil.server.call('deallocate', address,size)
+    processResponse = anvil.server.call('deallocate', address,size)
+    alert(processResponse)
     open_form('DisplayList')

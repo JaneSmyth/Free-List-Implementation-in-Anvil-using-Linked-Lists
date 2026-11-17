@@ -42,7 +42,7 @@ def deallocate(address,size):
   if current is None:
     app_tables.memorytable.add_row(ID=1, Address=address, Size=size, Next=None)
     app_tables.memorytablehead.add_row(HeadID=1)
-    return 
+    return
   if address < current['Address']:
     app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['ID'])
     app_tables.memorytablehead.get().update(HeadID = newNodeId)
@@ -88,13 +88,28 @@ def worstFitAlloc(size):
   current = head
   previous = None
   largestNode = current
+  largestPrev = None
   while(current is not None):
-    if(current['Size'] > largestNode):
+    if(current['Size'] > largestNode['Size']):
       largestNode = current
+      largestPrev = previous
+    previous = current
     current = app_tables.memorytable.get(ID=current['Next'])
-  if(size == largestNode['Size']):
-    #if the node we want is the same size as the amount of mem we need
+  if(largestNode['Size'] > size):
+    #removing it from the end
+    newSize = largestNode['Size'] - size
+    addOfBlock = largestNode['Address'] + newSize
+    largestNode.update(Size = newSize)
+    return print(addOfBlock)
+#    return print("curent add:", current['Address'],"block add:", addOfBlock, "new size:", newSize)
+  elif (largestNode['Size'] == size):
     addOfBlock = largestNode['Address']
-    if(largestNode == head):
-      if
-      
+    print("equal to")
+    if largestPrev is None:
+      app_tables.memorytablehead.get().update(HeadID =largestNode['Next'])
+    else:
+      largestPrev.update(Next = largestNode['Next'])
+    largestNode.delete()
+    return print(addOfBlock)
+  else:
+    return print("There is not enough memory for this")

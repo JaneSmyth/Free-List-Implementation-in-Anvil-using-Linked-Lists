@@ -12,3 +12,8 @@ class WorstFitAllocation(WorstFitAllocationTemplate):
     super().__init__(**properties)
 
     # Any code you write here will run before the form opens.
+  @handle("submit_btn", "click")
+  def submit_btn_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    requested_memory = int(self.size_textbox.text)
+    anvil.server.call('worstFitAlloc',requested_memory)
