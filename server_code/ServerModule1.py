@@ -13,11 +13,7 @@ def get_head():
 @anvil.server.callable
 def get_nodes():
   linked_list = []
-  head = get_head()
-  if head is None:
-    return linked_list 
-  current = head
-  
+  current = get_head()
   while(current is not None):
     linked_list.append(current)
     next = current['Next']
@@ -36,26 +32,26 @@ def next_available_ID():
   
 @anvil.server.callable
 def deallocate(address,size):
+  #insert a block back into the free list
   newNodeId = next_available_ID()
-  head = get_head()
-  current = head
-  if current is None:
+  current = get_head()
+
+  if current is None: #empty list insertion
     app_tables.memorytable.add_row(ID=1, Address=address, Size=size, Next=None)
     app_tables.memorytablehead.add_row(HeadID=1)
     return
-  if address < current['Address']:
+  if address < current['Address']: #insertion at head of list
     app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['ID'])
     app_tables.memorytablehead.get().update(HeadID = newNodeId)
     return
-  while(current['Next'] is not None):
+  while(current['Next'] is not None): #traversing to find where it should slot in, in order. Looking one place ahead. 
     nextNode = app_tables.memorytable.get(ID=current['Next'])
     if nextNode['Address'] >= address:
       break
     current = nextNode
-    
+  #inserting block in to its ordered place in the list  
   app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['Next'])
-  current.update(Next=newNodeId)
-   # print("address", address, "currentNode", current, "currentaddress",currentAddress, "END")
+  current.update(Next=newNodeId) #set next value to the new node we inserted 
 
 @anvil.server.callable
 def firstFitAlloc(size):
