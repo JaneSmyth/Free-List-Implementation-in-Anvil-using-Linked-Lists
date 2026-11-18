@@ -1,5 +1,6 @@
 <anvil-form layout="CA2_Project.Layouts.BaseLayout">
   <anvil-block slot="content">
+    <anvil-component type="Button" name="button_2" prop:text="Main Menu" prop:role="secondary-button" prop:font_size="12" prop:spacing='{"margin":["-20",null,null,null]}'></anvil-component>
     <anvil-component type="ColumnPanel" name="card_1" prop:role="card">
       <anvil-component type="Label" name="label_1" prop:text="Address" container:grid_position="GUAPXQ,XSXOXD"></anvil-component>
       <anvil-component type="TextBox" name="address_textbox" prop:placeholder="e.g. 100" container:grid_position="GUAPXQ,SJYAKO"></anvil-component>
@@ -7,5 +8,8 @@
       <anvil-component type="TextBox" name="size_textbox" prop:placeholder="e.g. 50" container:grid_position="KMLZQU,TLMDAM"></anvil-component>
     </anvil-component>
     <anvil-component type="Button" name="button_1" prop:text="Deallocate"></anvil-component>
+  </anvil-block>
+  <anvil-block slot="title">
+    <anvil-component type="Label" name="label_3" prop:text="Deallocate"></anvil-component>
   </anvil-block>
 </anvil-form>

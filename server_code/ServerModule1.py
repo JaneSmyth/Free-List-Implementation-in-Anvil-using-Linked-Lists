@@ -35,24 +35,30 @@ def deallocate(address,size):
   #insert a block back into the free list
   newNodeId = next_available_ID()
   current = get_head()
-
+  successMsg = "Memory block deallocated"
   if current is None: #empty list insertion
     app_tables.memorytable.add_row(ID=1, Address=address, Size=size, Next=None)
     app_tables.memorytablehead.add_row(HeadID=1)
-    return
+    return successMsg
+  if address == current['Address']:
+    return "Memory location already in use"
   if address < current['Address']: #insertion at head of list
     app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['ID'])
     app_tables.memorytablehead.get().update(HeadID = newNodeId)
-    return
+    return successMsg
+    
   while(current['Next'] is not None): #traversing to find where it should slot in, in order. Looking one place ahead. 
     nextNode = app_tables.memorytable.get(ID=current['Next'])
-    if nextNode['Address'] >= address:
+    if nextNode['Address'] == address:
+      return "Memory location already in use"
+    if nextNode['Address'] > address:
       break
     current = nextNode
   #inserting block in to its ordered place in the list  
   app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['Next'])
   current.update(Next=newNodeId) #set next value to the new node we inserted 
-
+  return successMsg
+  
 @anvil.server.callable
 def firstFitAlloc(size):
   head = get_head()
@@ -64,7 +70,7 @@ def firstFitAlloc(size):
       newSize = current['Size'] - size
       addOfBlock = current['Address'] + newSize
       current.update(Size = newSize)
-      return print("curent add:", current['Address'],"block add:", addOfBlock, "new size:", newSize)
+      return ("Address of allocated memory block:", addOfBlock, " of size:", size)
     if (current['Size'] == size):
       addOfBlock = current['Address']
       print("equal to")
@@ -73,15 +79,17 @@ def firstFitAlloc(size):
       else:
         previous.update(Next = current['Next'])
       current.delete()
-      return print(addOfBlock)
+      return ("Address of allocated memory block:", addOfBlock, " of size:", size)
     previous = current
     current = app_tables.memorytable.get(ID=current['Next'])
-  return print("There is not enough memory for this")
+  return "There is not enough memory available"
 
 @anvil.server.callable
 def worstFitAlloc(size):
   head = get_head()
   current = head
+  if(current is None):
+    return "There is not enough memory available"
   previous = None
   largestNode = current
   largestPrev = None
@@ -96,16 +104,13 @@ def worstFitAlloc(size):
     newSize = largestNode['Size'] - size
     addOfBlock = largestNode['Address'] + newSize
     largestNode.update(Size = newSize)
-    return print(addOfBlock)
-#    return print("curent add:", current['Address'],"block add:", addOfBlock, "new size:", newSize)
+    return ("Address of allocated memory block:", addOfBlock, " of size:", size)
+
   elif (largestNode['Size'] == size):
     addOfBlock = largestNode['Address']
-    print("equal to")
     if largestPrev is None:
       app_tables.memorytablehead.get().update(HeadID =largestNode['Next'])
     else:
       largestPrev.update(Next = largestNode['Next'])
     largestNode.delete()
-    return print(addOfBlock)
-  else:
-    return print("There is not enough memory for this")
+    return ("Address of allocated memory block:", addOfBlock, " of size:", size)

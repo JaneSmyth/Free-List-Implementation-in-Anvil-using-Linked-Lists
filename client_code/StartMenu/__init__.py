@@ -13,8 +13,6 @@ class StartMenu(StartMenuTemplate):
   @handle("submit_menu", "click")
   def submit_menu_click(self, **event_args):
     """This method is called when the button is clicked"""
-    
-    print(self.drop_down_menu.selected_value)
     menu_item = self.drop_down_menu.selected_value
     if(menu_item == "Display Free Memory List"):
       open_form("DisplayList")

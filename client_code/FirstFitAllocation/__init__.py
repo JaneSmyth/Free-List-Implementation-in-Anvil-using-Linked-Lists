@@ -11,10 +11,22 @@ class FirstFitAllocation(FirstFitAllocationTemplate):
     # Set Form properties and Data Bindings.
     super().__init__(**properties)
 
-    # Any code you write here will run before the form opens.
-
   @handle("submit_btn", "click")
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
-    requested_memory = int(self.size_textbox.text)
-    anvil.server.call('firstFitAlloc',requested_memory)
+    try:
+      requested_memory = int(self.size_textbox.text)
+    except ValueError:
+      alert("Please enter a valid whole number")
+      return
+    if requested_memory <= 0:
+      alert("Memory size must be greater than 0")
+      return
+    response = anvil.server.call('firstFitAlloc',requested_memory)
+    alert(response)
+    open_form('DisplayList')
+    
+  @handle("button_1", "click")
+  def button_1_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    open_form('StartMenu')
