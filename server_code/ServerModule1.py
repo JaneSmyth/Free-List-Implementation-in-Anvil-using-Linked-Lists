@@ -46,7 +46,6 @@ def deallocate(address,size):
     app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['ID'])
     app_tables.memorytablehead.get().update(HeadID = newNodeId)
     return successMsg
-    
   while(current['Next'] is not None): #traversing to find where it should slot in, in order. Looking one place ahead. 
     nextNode = app_tables.memorytable.get(ID=current['Next'])
     if nextNode['Address'] == address:
@@ -104,8 +103,7 @@ def worstFitAlloc(size):
     addOfBlock = largestNode['Address'] + newSize
     largestNode.update(Size = newSize)
     return ("Address of allocated memory block:", addOfBlock, " of size:", size)
-
-  elif (largestNode['Size'] == size):
+  if (largestNode['Size'] == size):
     addOfBlock = largestNode['Address']
     if largestPrev is None:
       app_tables.memorytablehead.get().update(HeadID =largestNode['Next'])
@@ -113,3 +111,4 @@ def worstFitAlloc(size):
       largestPrev.update(Next = largestNode['Next'])
     largestNode.delete()
     return ("Address of allocated memory block:", addOfBlock, " of size:", size)
+  return "There is not enough memory available"
