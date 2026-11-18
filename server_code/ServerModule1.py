@@ -73,7 +73,6 @@ def firstFitAlloc(size):
       return ("Address of allocated memory block:", addOfBlock, " of size:", size)
     if (current['Size'] == size):
       addOfBlock = current['Address']
-      print("equal to")
       if previous is None:
         app_tables.memorytablehead.get().update(HeadID =current['Next'])
       else:
