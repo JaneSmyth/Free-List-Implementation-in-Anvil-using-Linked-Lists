@@ -51,29 +51,27 @@ def deallocate(address,size):
     #Update head variable to new node
     app_tables.memorytablehead.add_row(HeadID=1)
     return successMsg
-  if address == current['Address']: #deallocate an address that is already in the free list
+  if address == current['Address']: #Deallocate an address that is already in the free list
     return "Memory location already in use"
   if address < current['Address']: #Insert at head of list
-    #insert node 
     app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['ID'])
-    app_tables.memorytablehead.get().update(HeadID = newNodeId)
+    app_tables.memorytablehead.get().update(HeadID = newNodeId) #head is set to new node
     return successMsg
-  while(current['Next'] is not None): #traversing to find where it should slot in, in order. Looking one place ahead. 
+  while(current['Next'] is not None): #Traverse to find insert slot, in order. Looking one place ahead. 
     nextNode = app_tables.memorytable.get(ID=current['Next'])
     if nextNode['Address'] == address:
       return "Memory location already in use"
-    if nextNode['Address'] > address:
-      break
+    if nextNode['Address'] > address: 
+      break  #loop breaks when the next address is greater than insertion address, proceeds to the node inserting process
     current = nextNode
-  #inserting block in to its ordered place in the list  
+  #Inserting process. New nodes next is set to current.next. This insertion also covers nodes at the end of the list
   app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['Next'])
-  current.update(Next=newNodeId) #set next value to the new node we inserted 
+  current.update(Next=newNodeId) #sets current.next value to the new node we inserted 
   return successMsg
   
 @anvil.server.callable
 def firstFitAlloc(size):
-  head = get_head()
-  current = head
+  current = get_head()
   previous = None
   while(current is not None):
     if(current['Size'] > size):
@@ -81,7 +79,7 @@ def firstFitAlloc(size):
       newSize = current['Size'] - size
       addOfBlock = current['Address'] + newSize
       current.update(Size = newSize)
-      return f"Address of allocated memory block: {addOfBlock} of size: {size}"
+      return f"Allocated memory address: {addOfBlock}\nsize: {size}"
     if (current['Size'] == size):
       addOfBlock = current['Address']
       if previous is None:
@@ -89,7 +87,7 @@ def firstFitAlloc(size):
       else:
         previous.update(Next = current['Next'])
       current.delete()
-      return f"Address of allocated memory block: {addOfBlock} of size: {size}"
+      return f"Allocated memory address: {addOfBlock}\nsize: {size}"
     previous = current
     current = app_tables.memorytable.get(ID=current['Next'])
   return "There is not enough memory available"
@@ -114,7 +112,7 @@ def worstFitAlloc(size):
     newSize = largestNode['Size'] - size
     addOfBlock = largestNode['Address'] + newSize
     largestNode.update(Size = newSize)
-    return f"Address of allocated memory block: {addOfBlock} of size: {size}"
+    return f"Allocated memory address: {addOfBlock}\nsize: {size}"
   if (largestNode['Size'] == size):
     addOfBlock = largestNode['Address']
     if largestPrev is None:
@@ -122,5 +120,5 @@ def worstFitAlloc(size):
     else:
       largestPrev.update(Next = largestNode['Next'])
     largestNode.delete()
-    return f"Address of allocated memory block: {addOfBlock} of size: {size}"
+    return f"Allocated memory address: {addOfBlock}\nsize: {size}"
   return "There is not enough memory available"
