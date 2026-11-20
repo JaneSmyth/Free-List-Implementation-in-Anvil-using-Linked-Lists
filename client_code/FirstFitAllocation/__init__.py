@@ -5,7 +5,6 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-
 class FirstFitAllocation(FirstFitAllocationTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
@@ -13,20 +12,18 @@ class FirstFitAllocation(FirstFitAllocationTemplate):
 
   @handle("submit_btn", "click")
   def submit_btn_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    try:
+    try: #try to convert the input to integer
       requested_memory = int(self.size_textbox.text)
-    except ValueError:
-      alert("Please enter a valid whole number")
+    except ValueError: #if it isnt possible due to invalid input, throw error
+      Notification("Please enter a valid whole number").show()
       return
-    if requested_memory <= 0:
-      alert("Memory size must be greater than 0")
+    if requested_memory <= 0: 
+      Notification("Memory size must be greater than 0").show()
       return
     response = anvil.server.call('firstFitAlloc',requested_memory)
-    alert(response.strip())
+    Notification(response).show()
     open_form('DisplayList')
     
-  @handle("button_1", "click")
-  def button_1_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    open_form('StartMenu')
+  @handle("menu_btn", "click")
+  def menu_btn_click(self, **event_args):
+    open_form('StartMenu') 

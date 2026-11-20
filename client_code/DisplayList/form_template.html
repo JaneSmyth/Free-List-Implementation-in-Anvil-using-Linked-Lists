@@ -1,10 +1,13 @@
 <anvil-form layout="CA2_Project.Layouts.BaseLayout">
   <anvil-block slot="content">
-    <anvil-component type="Button" name="button_1" prop:text="Main Menu" prop:role="secondary-button" prop:font_size="12" prop:spacing='{"margin":["-20",null,null,null]}'></anvil-component>
+    <anvil-component type="Button" name="menu_btn" prop:text="Main Menu" prop:role="secondary-button" prop:font_size="13" prop:spacing='{"margin":["-30",null,null,null],"padding":[null,null,null,null]}' prop:icon="fa:bars"></anvil-component>
     <anvil-component type="ColumnPanel" name="card_1" prop:role="card" prop:col_widths='"{\"DGUBUU\":20,\"UDILBA\":40}"'>
       <anvil-component type="Label" name="label_2" prop:text="Head →" prop:icon_align="right" prop:align="right" prop:font_size="12" prop:italic="true" container:grid_position="CVMNFG,DGUBUU"></anvil-component>
       <anvil-component type="RepeatingPanel" name="repeating_panel_1" prop:item_template="CA2_Project.DisplayList.ItemTemplate1" prop:margin='[null,"350",null,"0"]' container:grid_position="CVMNFG,UDILBA KLNPVF,HPGACA"></anvil-component>
       <anvil-component type="Label" name="label_1" prop:text='"null"' prop:italic="true" prop:font_size="10" prop:spacing='{"margin":[null,"350",null,null]}' prop:align="center" container:grid_position="CVMNFG,UDILBA WFLLIW,LBZLNY"></anvil-component>
     </anvil-component>
+  </anvil-block>
+  <anvil-block slot="title">
+    <anvil-component type="Label" name="label_3" prop:text="Free Space List"></anvil-component>
   </anvil-block>
 </anvil-form>

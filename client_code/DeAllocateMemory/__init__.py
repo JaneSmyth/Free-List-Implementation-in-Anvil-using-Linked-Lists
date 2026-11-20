@@ -10,23 +10,21 @@ class DeAllocateMemory(DeAllocateMemoryTemplate):
     # Set Form properties and Data Bindings.
     super().__init__(**properties)
 
-  @handle("button_1", "click")
-  def button_1_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    try:
+  @handle("submit_btn", "click")
+  def submit_btn_click(self, **event_args):
+    try: #try to convert the input to integer
       size = int(self.size_textbox.text)
       address = int(self.address_textbox.text)
-    except ValueError:
-      alert("Please enter valid whole numbers in both boxes")
+    except ValueError: #if it isnt possible due to invalid input, throw error
+      Notification("Please enter valid whole numbers").show()
       return
     if size <= 0 or address < 0:
-      alert("Size must be greater than 0 and address cannot be negative")
+      Notification("Size must be greater than 0").show()
       return
     response = anvil.server.call('deallocate', address, size)
-    alert(response)
+    Notification(response).show()
     open_form('DisplayList')
 
-  @handle("button_2", "click")
-  def button_2_click(self, **event_args):
-    """This method is called when the button is clicked"""
+  @handle("menu_btn", "click")
+  def menu_btn_click(self, **event_args):
     open_form('StartMenu')

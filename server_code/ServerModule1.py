@@ -68,57 +68,56 @@ def deallocate(address,size):
   app_tables.memorytable.add_row(ID=newNodeId, Address=address, Size=size, Next=current['Next'])
   current.update(Next=newNodeId) #sets current.next value to the new node we inserted 
   return successMsg
-  
+
+#Function removes the memory from the first node that has space. Takes it from end of the block not the start
 @anvil.server.callable
-def firstFitAlloc(size):
+def firstFitAlloc(size): 
   current = get_head()
   previous = None
   while(current is not None):
-    if(current['Size'] > size):
-      #removing it from the end
-      newSize = current['Size'] - size
-      addOfBlock = current['Address'] + newSize
-      current.update(Size = newSize)
+    if(current['Size'] > size): #located node with enough memory for allocation
+      newSize = current['Size'] - size #new size of remaining node
+      addOfBlock = current['Address'] + newSize #address of block of memory allocated to the user
+      current.update(Size = newSize) #set current.size = new size
       return f"Allocated memory address: {addOfBlock}\nsize: {size}"
-    if (current['Size'] == size):
-      addOfBlock = current['Address']
-      if previous is None:
-        app_tables.memorytablehead.get().update(HeadID =current['Next'])
+    if (current['Size'] == size): #located node with exactly the right amount of memory
+      addOfBlock = current['Address'] 
+      if previous is None: #if we are at the start of the list update head node to current.next
+        app_tables.memorytablehead.get().update(HeadID =current['Next']) 
       else:
-        previous.update(Next = current['Next'])
+        previous.update(Next = current['Next']) #set previous nodes 'next' to current.next
       current.delete()
       return f"Allocated memory address: {addOfBlock}\nsize: {size}"
-    previous = current
-    current = app_tables.memorytable.get(ID=current['Next'])
+    previous = current #move previous forward one node
+    current = app_tables.memorytable.get(ID=current['Next']) #move current forward one node
   return "There is not enough memory available"
 
+#This functions removes the memory from the largest block in the list. Takes it from end of the block not the start
 @anvil.server.callable
 def worstFitAlloc(size):
-  head = get_head()
-  current = head
-  if(current is None):
+  current = get_head()
+  if(current is None): #checks if list is empty. Otherwise largestNode['size'] will throw an error
     return "There is not enough memory available"
   previous = None
   largestNode = current
   largestPrev = None
   while(current is not None):
-    if(current['Size'] > largestNode['Size']):
+    if(current['Size'] > largestNode['Size']): #finds the node with the most memory
       largestNode = current
-      largestPrev = previous
-    previous = current
+      largestPrev = previous #keeps track of the node directly before the largest
+    previous = current #current and previous move forward one node for loop to continue
     current = app_tables.memorytable.get(ID=current['Next'])
-  if(largestNode['Size'] > size):
-    #removing it from the end
-    newSize = largestNode['Size'] - size
-    addOfBlock = largestNode['Address'] + newSize
-    largestNode.update(Size = newSize)
+  if(largestNode['Size'] > size): #if the node has more memory than we need
+    newSize = largestNode['Size'] - size #calculate memory leftover
+    addOfBlock = largestNode['Address'] + newSize #calculate address of allocated block
+    largestNode.update(Size = newSize) #update the size of the remaining node
     return f"Allocated memory address: {addOfBlock}\nsize: {size}"
-  if (largestNode['Size'] == size):
+  if (largestNode['Size'] == size): #if the node has exactly the amount of memory needed
     addOfBlock = largestNode['Address']
-    if largestPrev is None:
-      app_tables.memorytablehead.get().update(HeadID =largestNode['Next'])
+    if largestPrev is None: #if we are at the head of the list
+      app_tables.memorytablehead.get().update(HeadID =largestNode['Next']) #head is updated to the node after the largest
     else:
-      largestPrev.update(Next = largestNode['Next'])
+      largestPrev.update(Next = largestNode['Next']) #otherwise set the node before the largests to point to the node after the largest
     largestNode.delete()
     return f"Allocated memory address: {addOfBlock}\nsize: {size}"
   return "There is not enough memory available"
