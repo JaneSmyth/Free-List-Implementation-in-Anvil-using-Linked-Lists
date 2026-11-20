@@ -67,7 +67,7 @@ def firstFitAlloc(size):
     if(current['Size'] > size):
       #removing it from the end
       newSize = current['Size'] - size
-      addOfBlock = current['Address'] + newSize
+      addOfBlock = current['Address'] + size
       current.update(Size = newSize)
       return ("Address of allocated memory block:", addOfBlock, " of size:", size)
     if (current['Size'] == size):
@@ -100,7 +100,7 @@ def worstFitAlloc(size):
   if(largestNode['Size'] > size):
     #removing it from the end
     newSize = largestNode['Size'] - size
-    addOfBlock = largestNode['Address'] + newSize
+    addOfBlock = largestNode['Address'] + size
     largestNode.update(Size = newSize)
     return ("Address of allocated memory block:", addOfBlock, " of size:", size)
   if (largestNode['Size'] == size):
