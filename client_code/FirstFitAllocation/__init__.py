@@ -23,7 +23,7 @@ class FirstFitAllocation(FirstFitAllocationTemplate):
       alert("Memory size must be greater than 0")
       return
     response = anvil.server.call('firstFitAlloc',requested_memory)
-    alert(response)
+    alert(response.strip())
     open_form('DisplayList')
     
   @handle("button_1", "click")
