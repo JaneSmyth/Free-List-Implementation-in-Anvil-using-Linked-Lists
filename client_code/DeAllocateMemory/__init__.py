@@ -16,13 +16,13 @@ class DeAllocateMemory(DeAllocateMemoryTemplate):
       size = int(self.size_textbox.text)
       address = int(self.address_textbox.text)
     except ValueError: #if it isnt possible due to invalid input, throw error
-      Notification("Please enter valid whole numbers").show()
+      Notification("Please enter valid whole numbers",timeout=5).show()
       return
     if size <= 0 or address < 0:
-      Notification("Size must be greater than 0").show()
+      Notification("Size must be greater than 0",timeout=5).show()
       return
     response = anvil.server.call('deallocate', address, size)
-    Notification(response).show()
+    Notification(response,timeout=5).show()
     open_form('DisplayList')
 
   @handle("menu_btn", "click")

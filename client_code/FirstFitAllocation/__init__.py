@@ -15,14 +15,15 @@ class FirstFitAllocation(FirstFitAllocationTemplate):
     try: #try to convert the input to integer
       requested_memory = int(self.size_textbox.text)
     except ValueError: #if it isnt possible due to invalid input, throw error
-      Notification("Please enter a valid whole number").show()
+      Notification("Please enter a valid whole number",timeout=5).show()
       return
     if requested_memory <= 0: 
-      Notification("Memory size must be greater than 0").show()
+      Notification("Memory size must be greater than 0",timeout=5).show()
       return
     response = anvil.server.call('firstFitAlloc',requested_memory)
-    Notification(response).show()
-    open_form('DisplayList')
+    Notification(response, timeout=5).show()
+    if response != "There is not enough memory available":
+      open_form('DisplayList')
     
   @handle("menu_btn", "click")
   def menu_btn_click(self, **event_args):
