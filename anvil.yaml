@@ -4,19 +4,19 @@ db_schema:
   memorytable:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {order: 0, width: 56}
       client_hidden: false
       name: ID
       type: number
-    - admin_ui: {order: 1, width: 129}
+    - admin_ui: {order: 1, width: 92}
       client_hidden: false
       name: Address
       type: number
-    - admin_ui: {order: 2, width: 106}
+    - admin_ui: {order: 2, width: 73}
       client_hidden: false
       name: Size
       type: number
-    - admin_ui: {order: 4, width: 200}
+    - admin_ui: {order: 4, width: 67}
       client_hidden: false
       name: Next
       type: number
