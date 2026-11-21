@@ -79,7 +79,7 @@ def firstFitAlloc(size):
       newSize = current['Size'] - size #new size of remaining node
       addOfBlock = current['Address'] + newSize #address of block of memory allocated to the user
       current.update(Size = newSize) #set current.size = new size
-      return f"Allocated memory address: {addOfBlock}\nsize: {size}"
+      return f"Allocated memory address: {addOfBlock}\nSize: {size}"
     if (current['Size'] == size): #located node with exactly the right amount of memory
       addOfBlock = current['Address'] 
       if previous is None: #if we are at the start of the list update head node to current.next
@@ -87,7 +87,7 @@ def firstFitAlloc(size):
       else:
         previous.update(Next = current['Next']) #set previous nodes 'next' to current.next
       current.delete()
-      return f"Allocated memory address: {addOfBlock}\nsize: {size}"
+      return f"Allocated memory address: {addOfBlock}\nSize: {size}"
     previous = current #move previous forward one node
     current = app_tables.memorytable.get(ID=current['Next']) #move current forward one node
   return "There is not enough memory available"
@@ -111,7 +111,7 @@ def worstFitAlloc(size):
     newSize = largestNode['Size'] - size #calculate memory leftover
     addOfBlock = largestNode['Address'] + newSize #calculate address of allocated block
     largestNode.update(Size = newSize) #update the size of the remaining node
-    return f"Allocated memory address: {addOfBlock}\nsize: {size}"
+    return f"Allocated memory address: {addOfBlock}\nSize: {size}"
   if (largestNode['Size'] == size): #if the node has exactly the amount of memory needed
     addOfBlock = largestNode['Address']
     if largestPrev is None: #if we are at the head of the list
@@ -119,5 +119,5 @@ def worstFitAlloc(size):
     else:
       largestPrev.update(Next = largestNode['Next']) #otherwise set the node before the largests to point to the node after the largest
     largestNode.delete()
-    return f"Allocated memory address: {addOfBlock}\nsize: {size}"
+    return f"Allocated memory address: {addOfBlock}\nSize: {size}"
   return "There is not enough memory available"
