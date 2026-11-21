@@ -23,7 +23,8 @@ class DeAllocateMemory(DeAllocateMemoryTemplate):
       return
     response = anvil.server.call('deallocate', address, size)
     Notification(response,timeout=5).show()
-    open_form('DisplayList')
+    if response != "Memory location already in use":
+      open_form('DisplayList')
 
   @handle("menu_btn", "click")
   def menu_btn_click(self, **event_args):
