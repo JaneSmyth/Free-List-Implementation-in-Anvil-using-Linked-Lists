@@ -34,7 +34,7 @@ db_schema:
     server: full
     title: MemoryTableHead
 dependencies: []
-name: Clone of CA2 Project
+name: CA2 DSA Final Project
 package_name: CA2_Project
 runtime_options:
   client_version: '3'
